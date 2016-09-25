@@ -17,7 +17,7 @@
 #include "mygraphlib.h"
 #include "tsp_bt_bnb.h"
 
-bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, ListGraph::NodeMap<bool> node);
+bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap node);
 
 //------------------------------------------------------------------------------
 bool bt(TSP_Data &tsp, int maxTime)
@@ -38,7 +38,7 @@ bool bt(TSP_Data &tsp, int maxTime)
 	
 }
 
-bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, ListGraph::NodeMap<bool> node) {
+bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap node) {
 
 	node[u] = true;
 	
