@@ -27,12 +27,12 @@ bool bt(TSP_Data &tsp, int maxTime)
  ******************************************************************************/
 {
 
-	NodeBoolMap nodeBM(tsp.g);
+	NodeBoolMap ndx(tsp.g);
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
-		node[n] = false;
+		ndx[n] = false;
 	
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
-		return bfs(tsp, maxTime, n, 0, 0, node_);
+		return bfs(tsp, maxTime, n, 0, 0, ndx);
 	
 	return false;
 	
@@ -44,7 +44,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 	
 	// dado um vertice, passa por todos seus vizinhos	
 
-	for (Graph::OutEdgeIt e(tsp.g, u); e != INVALID; ++e) {
+	for (ListGraph::OutEdgeIt e(tsp.g, u); e != INVALID; ++e) {
 		
 		Node v = tsp.g.target(e);
 		
