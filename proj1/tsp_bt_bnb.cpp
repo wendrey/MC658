@@ -32,7 +32,7 @@ bool bt(TSP_Data &tsp, int maxTime)
 		ndx[n] = false;
 	
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
-		return bfs(tsp, maxTime, n, 0, 0, ndx);
+		return bfs(tsp, maxTime, n, 0, 0, &ndx);
 	
 	return false;
 	
