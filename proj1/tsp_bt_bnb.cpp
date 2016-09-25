@@ -25,14 +25,12 @@ bool bt(TSP_Data &tsp, int maxTime)
  ******************************************************************************/
 {
 
-	int visit = 0;
-
 	NodeBoolMap node(tsp.g);
-	for (ListGraph::NodeIt n(tsp.g); n != INVALID; n++)
+	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
 		node[n] = false;
 	
-	for (ListGraph::NodeIt n(tsp.g); n != INVALID; n++)
-		return bfs(tsp, maxTime, n, 0, 0, node;
+	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
+		return bfs(tsp, maxTime, n, 0, 0, node);
 	
 }
 
@@ -42,9 +40,9 @@ void bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 	
 	// dado um vertice, passa por todos seus vizinhos	
 
-	for (ListGraph::OutEdgeIt e(tsp.g, u); e != INVALID; e++) {
+	for (OutEdgeIt e(tsp.g, u); e != INVALID; ++e) {
 		
-		v = tsp.g.target(e);
+		Node v = tsp.g.target(e);
 		
 		// se existe uma potencial solucao, continua a busca
 		// se achar uma solucao melhor, atualiza a solucao
@@ -60,7 +58,7 @@ void bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		// se achar uma solucao melhor, atualiza a solucao
 		
 		else if (node[v] == tsp.BestCircuit[0] && visit+1 == tsp.NNodes) {
-			if (cost + tsp.weigth[e] < tsp.BestCircuitValue) {					
+			if (cost + tsp.weight[e] < tsp.BestCircuitValue) {					
 				tsp.BestCircuitValue = cost + tsp.weight[e];
 				return true;
 			}
