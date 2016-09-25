@@ -34,7 +34,7 @@ bool bt(TSP_Data &tsp, int maxTime)
 	
 }
 
-void bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap node) {
+bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap node) {
 
 	node[u] = true;
 	
@@ -57,7 +57,7 @@ void bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		// se achou o ciclo, verifica se a solucao melhora
 		// se achar uma solucao melhor, atualiza a solucao
 		
-		else if (node[v] == tsp.BestCircuit[0] && visit+1 == tsp.NNodes) {
+		else if (v == tsp.BestCircuit[0] && visit+1 == tsp.NNodes) {
 			if (cost + tsp.weight[e] < tsp.BestCircuitValue) {					
 				tsp.BestCircuitValue = cost + tsp.weight[e];
 				return true;
