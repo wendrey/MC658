@@ -27,12 +27,12 @@ bool bt(TSP_Data &tsp, int maxTime)
  ******************************************************************************/
 {
 
-	NodeBoolMap node(tsp.g);
+	NodeBoolMap nodeBM(tsp.g);
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
 		node[n] = false;
 	
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
-		return bfs(tsp, maxTime, n, 0, 0, node);
+		return bfs(tsp, maxTime, n, 0, 0, node_);
 	
 	return false;
 	
@@ -44,7 +44,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 	
 	// dado um vertice, passa por todos seus vizinhos	
 
-	for (OutEdgeIt e(tsp.g, u); e != INVALID; ++e) {
+	for (Graph::OutEdgeIt e(tsp.g, u); e != INVALID; ++e) {
 		
 		Node v = tsp.g.target(e);
 		
@@ -52,7 +52,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		// se achar uma solucao melhor, atualiza a solucao
 		
 		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue) { 
-			if bfs(tsp, maxTime, v, visit+1, cost + tsp.weight[e])) {
+			if (bfs(tsp, maxTime, v, visit+1, cost + tsp.weight[e])) {
 				tsp.BestCircuit[visit] = v;
 				return true;
 			}
