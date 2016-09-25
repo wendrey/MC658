@@ -44,7 +44,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 	
 	// dado um vertice, passa por todos seus vizinhos	
 
-	for (ListGraph::OutEdgeIt e(tsp.g, u); e != INVALID; ++e) {
+	for (ListGraph::IncEdgeIt e(tsp.g, u); e != INVALID; ++e) {
 		
 		Node v = tsp.g.target(e);
 		
