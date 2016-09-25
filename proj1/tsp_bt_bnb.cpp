@@ -52,7 +52,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		// se achar uma solucao melhor, atualiza a solucao
 		
 		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue) { 
-			if (bfs(tsp, maxTime, v, visit+1, cost + tsp.weight[e])) {
+			if (bfs(tsp, maxTime, v, visit+1, cost + tsp.weight[e], node)) {
 				tsp.BestCircuit[visit] = v;
 				return true;
 			}
