@@ -1,0 +1,68 @@
+
+Exercícios: Aplicação e formulação
+
+\item Implemente um algoritmo exato para o problema de Steiner em grafos
+   não-orientados. Utilize também a inserção de cortes utilizando a árvore de
+   Gomory-Hu.
+
+\item Implemente um algoritmo exato para o problema de Steiner em grafos, mas
+   considerando a versão orientada com raiz. Para isso, escolha um dos terminais
+   como raiz e encontre uma árvore enraizada que contempla todos os vértices
+   terminais e todos os caminhos seguem na orientação da raiz para os
+   terminais. Compare os limitantes que obteve neste caso. Esta versão é
+   conhecida por dar limitantes melhores que a versão não orientada.
+
+\item Considere um grafo completo G=(V,E,c), com conjunto de vértices
+   V={0,1,...,n}, conjunto de arestas E e custo nas arestas c:E->R+. Dado
+   inteiro K>0, onde n>=K, o problema do VRP consiste em encontrar K rotas
+   disjuntas nos vértices, onde cada uma passa pelo vértice 0 e pelo menos um
+   outro vértice de V. Além disso, cada vértice de V\{0} deve pertencer a
+   exatamente uma rota.  Faça uma implementação utilizando uma modelagem por
+   grafos orientados e outra por grafos não-orientados. Compare as duas
+   soluções.
+
+
+Exercícios: Mudança no código
+
+\item Faça diferentes maneiras de se escolher a variável
+   fracionária de um nó. Experimente escolher a variável fracionária que está
+   mais próxima de inteiro com probabilidade p e a variável fracionária que está
+   mais longe de inteiro com probabilidade 1-p. Experimente com diferentes
+   valores de instâncias e para cada instância, diferentes valores de p.
+
+\item Alguns problemas, ou devido aos dados da instância ou pelo tipo da
+   solução, admitem apenas soluções inteiras. Coloque mais um parâmetro no
+   solver (parâmetro opcional) e permita que a rotina de branch and cut pode
+   ramos arredondando soluções fracionárias.
+
+\item Muitas vezes o uso de desigualdades mais fortes permite que o número de
+   ramificações na árvore de branch and cut fique menor. Uma classe de
+   desigualdades importante para o TSP são as desigualdades de pente (comb
+   inequalities). Implemente as desigualdades de pente simples, que podem ser
+   encontradas em tempo polinomial (um caso particular destas desigualdades são
+   as de 2-matching).
+
+\item Algumas variáveis podem ser fixadas para seu valor inteiro usando o método
+   de fixação de variáveis por custo reduzido. Esta técnica permite remover
+   muitas variáveis no Problema do Caixeiro Viajante. Implemente esta técnica.
+
+\item Implemente um pool de desigualdades.  Além disso, faça alguma estratégia
+   para de tempos em tempos, remover as desigualdades de conectividade que não
+   são satisfeitas com igualdade pelas soluções fracionárias dos nós (ou pela
+   grande maioria dos nós) ativos. 
+
+\item Considere um computador com K processadores. É possível paralelizar o
+   algoritmo branch and cut, fazendo cada processador processar um nó
+   ativo. Caso tenha tal ambiente computacional, implemente este tipo de
+   paralelização, usando K programas lineares, um por processador.
+
+   Note que desigualdades válidas globais, encontradas por um nó também podem
+   ser usadas em outros programas lineares. Aproveite aquelas que ajudarem a
+   cortar soluções inválidas.
+
+\item Implemente alguma estratégia que busca por soluções inteiras no nó raiz da
+   árvore de branch and bound, utilizando métodos que iterativamente arredondam
+   as variáveis fracionárias. Se seu método for bom e rápido, experimente
+   aplicá-lo em (alguns/todos) nós ativos da árvore de branch and cut.
+
+

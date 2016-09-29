@@ -1,0 +1,147 @@
+------------------------------------------------------------------------
+
+In this directory, you can find many programs using the LEMON Library and the
+use of linear programming. The LEMON Library can be found in the link:
+
+http://lemon.cs.elte.hu/
+
+To use the LEMON Library with linear programming, you must install a compatible
+linear programming package (clp, glpk, cplex, ...). See an example of
+instalation using CLP below.
+
+Most probably, these routines/programs will change a lot in the near future.
+So, be aware that this is the first version available in the internet. Hope 
+stable versions will be available in the future.
+
+Send comments/corrections to Flavio K. Miyazawa.
+
+========================================================================
+Example of instalation with CLP (COIN-OR Linear Programming) package.
+Perform the following steps.
+
+------------------------------------------------------------------------
+Step 1. Instalation of Clp package
+------------------------------------------------------------------------
+
+Download the Clp package from the link 
+
+http://www.coin-or.org/projects/Clp.xml
+
+and build the package (generate the libs). In general you only need to give the
+following commands in the Clp directory:
+
+./configure
+make
+make install
+
+------------------------------------------------------------------------
+Step 2. Instalation of LEMON package
+------------------------------------------------------------------------
+
+Download the LEMON package from the link
+
+http://lemon.cs.elte.hu/
+
+and install the package. To build LEMON with Clp, you need to give the
+following commands in the LEMON directory:
+
+./configure --without-glpk --with-coin=CLPDIRECTORY
+make
+sudo make install
+
+where the word CLPDIRECTORY in the configure command must be replaced with the
+directory of the Clp package. 
+
+------------------------------------------------------------------------
+Step 3. Correcting the pdf reader.
+------------------------------------------------------------------------
+As some of the programs in this directory uses a pdf reader, open the file
+thirdpartprograms.h, and change/comment the name of the pdf reader used in your
+system. For example:
+
+#define PDF_READER "xpdf"  // To open a pdf file in Linux
+
+------------------------------------------------------------------------
+Step 4. Installing the graphviz package used to visualize graphs
+------------------------------------------------------------------------
+Another package used to view graphs, is the graphviz package that can be
+obtained from the link
+http://www.graphviz.org/
+When this package is installed, you can use two programs that are used
+to transform a graph in the .dot format to a pdf format. These are the
+"dot" and the "neato" programs.
+
+------------------------------------------------------------------------
+Step 5. Building the executable files in this directory.
+------------------------------------------------------------------------
+
+After you have installed the Clp and LEMON, you have to change the Makefile of
+the current file and replace the line
+LIBDIR = -L/Users/fkm/tiziu/academico/otimizacao/coin-or/clp/lib
+changing the substring "/Users/fkm/tiziu/academico/otimizacao/coin-or/clp/lib"
+with the Clp lib directory.
+
+The makefile uses a command "libtool" to generate a lib called "mylib.a" from
+the obj files: branch_cut.o readgraph.o viewgraph.o tempo.o
+You can use other command to generate such lib or you can change the makefile to 
+use the obj files branch_cut.o readgraph.o viewgraph.o tempo.o directly
+without doing the lib file.
+
+Then, you have to do the following command:
+
+make
+
+The executable files have suffix ".e"
+
+------------------------------------------------------------------------
+Step 5. Testing the programs
+------------------------------------------------------------------------
+To test any the following programs, you only need to run the program, without
+any parameters. To see what they do, see the corresponding .cpp file.
+
+ex_branch_cut1.e           (this program solves a simple integer linear program)
+ex_branch_cut2.e           (this program solves a simple integer linear program)
+ex_lp1.e                   (this program solves a simple integer linear program)
+ex_dieta1.e                (solves the diet formulation in the slides of the course)
+ex_min_cut1.e              (solves a min cut problem and you can visualize the graph)
+ex_tsp1_slides.e           (tsp formulation used in the slides of the course)
+ex_viewgraph_min_cut1.e    (generate a small graph, obtain a min cut and visualize)
+ex_readgraph1.e            (read graph gr_50 from file and visualize it)
+ex_tsp_directed.e          (read the graph gr_50 and solve the tsp problem)
+ex_matchingbipartitegraph.e   (solve the maximum bipartite matching via linear prog.)
+ex_shortestpath.e          (solve the shortest path problem on the graph gr_caminho)
+
+The only program that has an argument is the program
+
+ex_tsp_undirected.e
+
+That has an undirected graph as argument. Examples:
+./ex_tsp_undirected.e gr_berlin52          (52 places in the city of Berlin)
+./ex_tsp_undirected.e gr_usa48             (48 cities in the US)
+./ex_tsp_undirected.e gr_ulysses16
+
+Files begining with "gr_" are graph files. The first number, say N, in the first
+line of such a file, you can find the vertex number.
+
+If this number is followed by a -1, you have an euclidean graph. In this case,
+in the next N lines you can find a tuple "v, px, py" for each vertex v
+(e.g. gr_100). The position (px,py) is the coordinate of the vertex v in the
+plane. The graph is complete and distances are calculated by the euclidean
+distance.
+
+If after the number of vertices N you find a number M different of -1, then you
+have a graph given by nodes and edges. The next N lines have the name of the
+vertices (e.g. gr_50). Optionally, after the name of each vertex, you may give
+the position px and py of the corresponding node (e.g. gr_att48). And after the
+vertices, the next M lines you can find a tuple "u v weight" that is an edge
+that connects vertex u and vertex v and has weight "weight".
+
+
+Since this program is for didactical purposes it is very limited and is not
+optimized.
+------------------------------------------------------------------------
+
+
+
+
+
