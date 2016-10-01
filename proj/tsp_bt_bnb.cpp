@@ -45,7 +45,6 @@ bool bt(TSP_Data &tsp, int maxTime)
 
 bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap &node, clock_t t) {
 
-	printf("lala");
 	cerr << " BFS : " << visit << endl;
 	node[u] = true;
 		
@@ -59,7 +58,8 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 			return false;
 
 		Node v = tsp.g.target(e);
-				
+		return false;	
+					
 		// se existe uma potencial solucao, continua a busca
 		// se achar uma solucao melhor, atualiza a solucao
 		
@@ -73,13 +73,13 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		// se achou o ciclo, verifica se a solucao melhora
 		// se achar uma solucao melhor, atualiza a solucao
 		
-/*		else if (v == tsp.BestCircuit[0] && visit+1 == tsp.NNodes) {
+		else if (v == tsp.BestCircuit[0] && visit+1 == tsp.NNodes) {
 			if (cost + tsp.weight[e] < tsp.BestCircuitValue) {					
 				tsp.BestCircuitValue = cost + tsp.weight[e];
 				return true;
 			}
 		}					
-*/	
+	
 	}
 	
 	node[u] = false;
