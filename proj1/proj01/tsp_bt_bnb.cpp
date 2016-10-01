@@ -50,17 +50,9 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 	for (ListGraph::IncEdgeIt e(tsp.g, u); e != INVALID; ++e) {
 		
 		// verifica o tempo de execucao
-		printf("maxtime : %f\n", maxTime);
-		int k = (clock() - t) / CLOCKS_PER_SEC;
-		printf("maxtime : %f\n", maxTime);
 
-		if (maxTime >= k) {
-			printf("time    : %d\n", k);
-			printf("maxtime : %d\n", maxTime);
-			printf("time    : %f\n", k);
-			printf("maxtime : %f\n", maxTime);
+		if (maxTime < (clock() - t) / CLOCKS_PER_SEC)
 			return false;
-		}
 
 		Node v = tsp.g.target(e);
 		
