@@ -13,7 +13,7 @@
 // #define PDF_VIEWER "evince"  // To open pdf file in Linux
 // #define PDF_VIEWER "xpdf"    // To open pdf file in Linux
 // #define PDF_VIEWER "okular"	// To open pdf file in Linux
-#define PDF_VIEWER "chrome"  // To open pdf file in Linux
+#define PDF_VIEWER "ok"  // To open pdf file in Linux
 //=================================================================================
 
 #endif
