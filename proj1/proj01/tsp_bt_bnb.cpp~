@@ -56,12 +56,14 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 
 		Node v = tsp.g.target(e);
 		
+		return false;
+
 		// se existe uma potencial solucao, continua a busca
 		// se achar uma solucao melhor, atualiza a solucao
 		
 		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue) { 
 			if (bfs(tsp, maxTime, v, visit+1, cost + tsp.weight[e], node, t)) {
-				tsp.BestCircuit[visit] = v;
+				tsp.BestCircuit[visit] = u;
 				return true;
 			}
 		}
@@ -72,6 +74,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		else if (v == tsp.BestCircuit[0] && visit+1 == tsp.NNodes) {
 			if (cost + tsp.weight[e] < tsp.BestCircuitValue) {					
 				tsp.BestCircuitValue = cost + tsp.weight[e];
+				tsp.BestCircuit[visit] = v;
 				return true;
 			}
 		}					
