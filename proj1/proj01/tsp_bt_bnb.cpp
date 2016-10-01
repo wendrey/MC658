@@ -56,7 +56,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		if (maxTime >= k) {
 			printf("time    : %d\n", k);
 			printf("maxtime : %d\n", maxTime);
-			printf("time    : %f\n", k;
+			printf("time    : %f\n", k);
 			printf("maxtime : %f\n", maxTime);
 			cerr << "time   : " << k << "\nmaxtime : " << maxTime << endl;
 			return false;
