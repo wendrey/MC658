@@ -51,15 +51,20 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 
 	for (ListGraph::IncEdgeIt e(tsp.g, u); e != INVALID; ++e) {
 		
-		cerr << "BFS : " << visit << endl;
-
 		// verifica o tempo de execucao
 
 		if (maxTime < (clock() - t) / CLOCKS_PER_SEC)
 			return false;
 
 		Node v = tsp.g.target(e);
-					
+		
+		cerr << "BFS : " << visit << endl;
+		cerr << "Node u : " << tsp.g.id(u) << endl;					
+		cerr << "Node v : " << tsp.g.id(v) << endl;
+		cerr << "Arc u->v : " << tsp.g.id(e) << endl;
+		cerr << "Weight : " << tsp.weight[e] << endl;
+		cerr << "Map v : " << node[v] << endl		
+				
 		// se existe uma potencial solucao, continua a busca
 		// se achar uma solucao melhor, atualiza a solucao
 		
@@ -71,14 +76,14 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		// se achou o ciclo, verifica se a solucao melhora
 		// se achar uma solucao melhor, atualiza a solucao
 		
-		else if (v == tsp.BestCircuit.front() && visit+1 == tsp.NNodes) {
+/*		else if (v == tsp.BestCircuit.front() && visit+1 == tsp.NNodes) {
 			if (cost + tsp.weight[e] < tsp.BestCircuitValue) {					
 				tsp.BestCircuitValue = cost + tsp.weight[e];
 				tsp.BestCircuit = circuit;
 				return true;
 			}
 		}					
-	
+*/	
 	}
 
 	circuit.pop_back();	
