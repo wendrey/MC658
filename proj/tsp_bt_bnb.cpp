@@ -69,7 +69,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 				return true;	
 			}
 			else
-				cerr << "Valor muito alto" << endl
+				cerr << "Valor muito alto" << endl;
 		}
 		
 		// se achou o ciclo, verifica se a solucao melhora
