@@ -45,6 +45,7 @@ bool bt(TSP_Data &tsp, int maxTime)
 
 bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap &node, clock_t t) {
 
+	printf("lala");
 	cerr << " BFS : " << visit << endl;
 	node[u] = true;
 		
