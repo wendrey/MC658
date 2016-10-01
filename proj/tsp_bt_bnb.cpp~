@@ -54,7 +54,6 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		if (maxTime < (clock() - t) / CLOCKS_PER_SEC)
 			return false;
 
-		return false;
 		Node v = tsp.g.target(e);
 				
 		// se existe uma potencial solucao, continua a busca
@@ -67,6 +66,8 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 			}
 		}
 		
+		return false;
+
 		// se achou o ciclo, verifica se a solucao melhora
 		// se achar uma solucao melhor, atualiza a solucao
 		
