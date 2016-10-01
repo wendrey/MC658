@@ -63,7 +63,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		cerr << "Node v : " << tsp.g.id(v) << endl;
 		cerr << "Arc u->v : " << tsp.g.id(e) << endl;
 		cerr << "Weight : " << tsp.weight[e] << endl;
-		cerr << "Map v : " << node[v] << endl		
+		cerr << "Map v : " << node[v] << endl;		
 				
 		// se existe uma potencial solucao, continua a busca
 		// se achar uma solucao melhor, atualiza a solucao
