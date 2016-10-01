@@ -45,8 +45,9 @@ bool bt(TSP_Data &tsp, int maxTime)
 
 bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap &node, clock_t t) {
 
+	cerr << " BFS : " << visit << endl;
 	node[u] = true;
-	
+		
 	// dado um vertice, passa por todos seus vizinhos	
 
 	for (ListGraph::IncEdgeIt e(tsp.g, u); e != INVALID; ++e) {
