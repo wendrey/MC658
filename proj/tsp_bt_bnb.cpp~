@@ -34,8 +34,10 @@ bool bt(TSP_Data &tsp, int maxTime)
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
 		node[n] = false;
 	
-	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
+	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n) {
+		tsp.BestCircuit[0] = n;
 		return bfs(tsp, maxTime, n, 0, 0, node, t);
+	}
 	
 	return false;
 	
@@ -61,7 +63,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		
 		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue) { 
 			if (bfs(tsp, maxTime, v, visit+1, cost + tsp.weight[e], node, t)) {
-				tsp.BestCircuit[visit] = u;
+				tsp.BestCircuit[visit] = v;
 				return true;
 			}
 		}
@@ -72,7 +74,6 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 /*		else if (v == tsp.BestCircuit[0] && visit+1 == tsp.NNodes) {
 			if (cost + tsp.weight[e] < tsp.BestCircuitValue) {					
 				tsp.BestCircuitValue = cost + tsp.weight[e];
-				tsp.BestCircuit[visit] = v;
 				return true;
 			}
 		}					
