@@ -44,7 +44,6 @@ bool bt(TSP_Data &tsp, int maxTime)
 
 bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit) {
 
-	cerr << " BFS : " << visit << endl;
 	node[u] = true;
 	circuit.push_back(u);
 		
@@ -52,6 +51,8 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 
 	for (ListGraph::IncEdgeIt e(tsp.g, u); e != INVALID; ++e) {
 		
+		cerr << "BFS : " << visit << endl;
+
 		// verifica o tempo de execucao
 
 		if (maxTime < (clock() - t) / CLOCKS_PER_SEC)
