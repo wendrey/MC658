@@ -77,14 +77,14 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		// se achou o ciclo, verifica se a solucao melhora
 		// se achar uma solucao melhor, atualiza a solucao
 		
-/*		else if (v == tsp.BestCircuit.front() && visit+1 == tsp.NNodes) {
+		else if (v == circuit.front() && visit+1 == tsp.NNodes) {
 			if (cost + tsp.weight[e] < tsp.BestCircuitValue) {					
 				tsp.BestCircuitValue = cost + tsp.weight[e];
 				tsp.BestCircuit = circuit;
 				return true;
 			}
 		}					
-*/	
+	
 	}
 
 	circuit.pop_back();	
