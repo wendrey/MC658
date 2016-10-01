@@ -51,8 +51,8 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		
 		// verifica o tempo de execucao
 
-		if (maxTime >= (float (clock() - t)) / CLOCKS_PER_SEC)
-			return false;
+//		if (maxTime >= (float (clock() - t)) / CLOCKS_PER_SEC)
+//			return false;
 
 		Node v = tsp.g.target(e);
 		
