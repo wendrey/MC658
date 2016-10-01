@@ -18,7 +18,7 @@
 #include "mygraphlib.h"
 #include "tsp_bt_bnb.h"
 
-bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap &node);
+bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap &node, clock_t t);
 
 //------------------------------------------------------------------------------
 bool bt(TSP_Data &tsp, int maxTime)
@@ -35,13 +35,13 @@ bool bt(TSP_Data &tsp, int maxTime)
 		node[n] = false;
 	
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
-		return bfs(tsp, maxTime, n, 0, 0, node);
+		return bfs(tsp, maxTime, n, 0, 0, node, t);
 	
 	return false;
 	
 }
 
-bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap &node) {
+bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap &node, clock_t t) {
 
 	node[u] = true;
 	
@@ -60,7 +60,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		// se achar uma solucao melhor, atualiza a solucao
 		
 		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue) { 
-			if (bfs(tsp, maxTime, v, visit+1, cost + tsp.weight[e], node)) {
+			if (bfs(tsp, maxTime, v, visit+1, cost + tsp.weight[e], node, t)) {
 				tsp.BestCircuit[visit] = v;
 				return true;
 			}
