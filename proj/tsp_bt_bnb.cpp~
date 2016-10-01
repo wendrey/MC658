@@ -35,7 +35,7 @@ bool bt(TSP_Data &tsp, int maxTime)
 		node[n] = false;
 	
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n) {
-		tsp.BestCircuit[0] = n;
+//		tsp.BestCircuit[0] = n;
 		return bfs(tsp, maxTime, n, 0, 0, node, t);
 	}
 	
