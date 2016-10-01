@@ -18,7 +18,7 @@
 #include "mygraphlib.h"
 #include "tsp_bt_bnb.h"
 
-bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap &node, clock_t t);
+bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit);
 
 //------------------------------------------------------------------------------
 bool bt(TSP_Data &tsp, int maxTime)
@@ -29,24 +29,24 @@ bool bt(TSP_Data &tsp, int maxTime)
 {
 
 	clock_t t = clock();
+	vector<Node> circuit;
 
 	NodeBoolMap node(tsp.g);
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
 		node[n] = false;
 	
-	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n) {
-		tsp.BestCircuit.push_back(n);
-		return false; bfs(tsp, maxTime, n, 0, 0, node, t);
-	}
+	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
+		return bfs(tsp, maxTime, n, 0, 0, node, t, circuit);
 	
 	return false;
 	
 }
 
-bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap &node, clock_t t) {
+bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit) {
 
 	cerr << " BFS : " << visit << endl;
 	node[u] = true;
+	circuit.push_back(u);
 		
 	// dado um vertice, passa por todos seus vizinhos	
 
@@ -58,30 +58,28 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 			return false;
 
 		Node v = tsp.g.target(e);
-		return false;	
 					
 		// se existe uma potencial solucao, continua a busca
 		// se achar uma solucao melhor, atualiza a solucao
 		
-		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue) { 
-			if (bfs(tsp, maxTime, v, visit+1, cost + tsp.weight[e], node, t)) {
-				tsp.BestCircuit[visit] = v;
+		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue) 
+			if (bfs(tsp, maxTime, v, visit+1, cost + tsp.weight[e], node, t, circuit))
 				return true;
-			}
-		}
 		
 		// se achou o ciclo, verifica se a solucao melhora
 		// se achar uma solucao melhor, atualiza a solucao
 		
-		else if (v == tsp.BestCircuit[0] && visit+1 == tsp.NNodes) {
+		else if (v == tsp.BestCircuit.front() && visit+1 == tsp.NNodes) {
 			if (cost + tsp.weight[e] < tsp.BestCircuitValue) {					
 				tsp.BestCircuitValue = cost + tsp.weight[e];
+				tsp.BestCircuit = circuit;
 				return true;
 			}
 		}					
 	
 	}
-	
+
+	circuit.pop_back(u);	
 	node[u] = false;
 	return false;
 
