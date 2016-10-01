@@ -64,8 +64,12 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		// se achar uma solucao melhor, atualiza a solucao
 		
 		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue) {
-			if (bfs(tsp, maxTime, v, visit+1, cost + tsp.weight[e], node, t, circuit))
-				return true;
+			if (bfs(tsp, maxTime, v, visit+1, cost + tsp.weight[e], node, t, circuit)) {
+				cerr << "Indo para próximo nó" << endl;
+				return true;	
+			}
+			else
+				cerr << "Valor muito alto" << endl
 		}
 		
 		// se achou o ciclo, verifica se a solucao melhora
