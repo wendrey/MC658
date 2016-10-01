@@ -62,9 +62,10 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 		// se existe uma potencial solucao, continua a busca
 		// se achar uma solucao melhor, atualiza a solucao
 		
-		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue) 
+		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue) {
 			if (bfs(tsp, maxTime, v, visit+1, cost + tsp.weight[e], node, t, circuit))
 				return true;
+		}
 		
 		// se achou o ciclo, verifica se a solucao melhora
 		// se achar uma solucao melhor, atualiza a solucao
@@ -79,7 +80,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 	
 	}
 
-	circuit.pop_back(u);	
+	circuit.pop_back();	
 	node[u] = false;
 	return false;
 
