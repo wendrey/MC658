@@ -58,6 +58,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 
 		Node v = tsp.g.target(e);
 		
+		cerr << "-------------------" << endl;		
 		cerr << "BFS : " << visit << endl;
 		cerr << "Node u : " << tsp.g.id(u) << endl;					
 		cerr << "Node v : " << tsp.g.id(v) << endl;
