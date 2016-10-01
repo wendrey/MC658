@@ -56,7 +56,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 			printf("maxtime : %d\n", maxTime);
 			printf("time : %f\n", (float (clock() - t)) / CLOCKS_PER_SEC);
 			printf("maxtime : %f\n", maxTime);
-			c << err << "time : " << (float (clock() - t)) / CLOCKS_PER_SEC << "\n maxtime : " << maxTime << endl;
+			cerr << "time : " << (float (clock() - t)) / CLOCKS_PER_SEC << "\n maxtime : " << maxTime << endl;
 			return false; }
 
 		Node v = tsp.g.target(e);
