@@ -11,6 +11,7 @@
  * SUBMETA SOMENTE ESTE ARQUIVO
  ******************************************************************************/
 
+#include <time.h>
 #include <iostream>
 #include <float.h>
 #include <lemon/list_graph.h>
@@ -26,6 +27,8 @@ bool bt(TSP_Data &tsp, int maxTime)
  * ENTRETANTO, NÃO ALTERE A ASSINATURA DO MÉTODO.
  ******************************************************************************/
 {
+
+	clock_t t = clock();
 
 	NodeBoolMap node(tsp.g);
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
@@ -46,6 +49,11 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 
 	for (ListGraph::IncEdgeIt e(tsp.g, u); e != INVALID; ++e) {
 		
+		// verifica o tempo de execucao
+
+		if (maxTime >= (float (clock() - t)) / CLOCKS_PER_SECOND)
+			return false;
+
 		Node v = tsp.g.target(e);
 		
 		// se existe uma potencial solucao, continua a busca
