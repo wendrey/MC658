@@ -55,9 +55,8 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 			return false;
 
 		Node v = tsp.g.target(e);
-		
-		return false;
-
+		cerr << v << endl;		
+				
 		// se existe uma potencial solucao, continua a busca
 		// se achar uma solucao melhor, atualiza a solucao
 		
