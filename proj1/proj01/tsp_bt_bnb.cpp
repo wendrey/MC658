@@ -7,7 +7,7 @@
 
 /*******************************************************************************
  * EDITE ESTE ARQUIVO APENAS ONDE INDICADO
- * DIGITE SEU RA: ______
+ * DIGITE SEU RA: 148234
  * SUBMETA SOMENTE ESTE ARQUIVO
  ******************************************************************************/
 
@@ -17,60 +17,98 @@
 #include "mygraphlib.h"
 #include "tsp_bt_bnb.h"
 
+bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap &node);
+
+//------------------------------------------------------------------------------
 bool bt(TSP_Data &tsp, int maxTime)
 /*******************************************************************************
  * SUBSTITUIA O CONTEÚDO DESTE MÉTODO POR SUA IMPLEMENTAÇÃO DE BACKTRACKING.
  * ENTRETANTO, NÃO ALTERE A ASSINATURA DO MÉTODO.
  ******************************************************************************/
 {
-	return greedy(tsp, maxTime);
+
+	NodeBoolMap node(tsp.g);
+	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
+		node[n] = false;
+	
+	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
+		return bfs(tsp, maxTime, n, 0, 0, node);
+	
+	return false;
+	
 }
 
+bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMap node) {
+
+	node[u] = true;
+	
+	// dado um vertice, passa por todos seus vizinhos	
+
+	for (ListGraph::IncEdgeIt e(tsp.g, u); e != INVALID; ++e) {
+		
+		Node v = tsp.g.target(e);
+		
+		// se existe uma potencial solucao, continua a busca
+		// se achar uma solucao melhor, atualiza a solucao
+		
+		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue) { 
+			if (bfs(tsp, maxTime, v, visit+1, cost + tsp.weight[e], node)) {
+				tsp.BestCircuit[visit] = v;
+				return true;
+			}
+		}
+		
+		// se achou o ciclo, verifica se a solucao melhora
+		// se achar uma solucao melhor, atualiza a solucao
+		
+		else if (v == tsp.BestCircuit[0] && visit+1 == tsp.NNodes) {
+			if (cost + tsp.weight[e] < tsp.BestCircuitValue) {					
+				tsp.BestCircuitValue = cost + tsp.weight[e];
+				return true;
+			}
+		}					
+	
+	}
+	
+	node[u] = false;
+	return false;
+
+}
+
+//------------------------------------------------------------------------------
 bool bnb(TSP_Data &tsp,  int maxTime)
 /*******************************************************************************
  * SUBSTITUIA O CONTEÚDO DESTE MÉTODO POR SUA IMPLEMENTAÇÃO DE BRANCH AND BOUND.
  * ENTRETANTO, NÃO ALTERE A ASSINATURA DO MÉTODO.
  ******************************************************************************/
 {
-	return greedy(tsp, maxTime);
-}
-
-bool greedy(TSP_Data &tsp,  int maxTime)
-/*******************************************************************************
- * Algoritmo guloso para o TSP.
- ******************************************************************************/
-{
-	// Maps a boolean x to each edge of the graph g. Initialized as false.
-	EdgeBoolMap x(tsp.g);
-	for(EdgeIt e(tsp.g); e!=INVALID; ++e){  // We set every edge out of the the solution
+	// Algoritmo guloso para o tsp
+	
+	EdgeBoolMap x(tsp.g);  // Maps a boolean x to each edge of the graph g
+	for(ListGraph::EdgeIt e(tsp.g); e!=INVALID; ++e){  // We set every edge out of the the solution
 		x[e] = false;
 	}
 	
-	// NodeBoolMap y(tsp.g, false);  // Maps a boolean y to each vertex of the graph g. Initialized as false.
-	NodeBoolMap y(tsp.g);
-	for(NodeIt o(tsp.g); o!=INVALID; ++o){
-		y[o] = false;
-	}
-	
+	list<int> tour;
 	double cost = 0.0;
 	int nedges = 0;
 	
-	// cerr << endl;
-	// for(NodeIt o(tsp.g); o != INVALID; ++o){
-	// 	cerr << tsp.g.id(o) << ":" << y[o] << "  ";
-	// }
-	// cerr << endl;
+	NodeBoolMap y(tsp.g);  // Maps a boolean y to each vertex of the graph g
+	for(NodeIt o(tsp.g); o!=INVALID; ++o){
+		y[o] = false;
+		cerr << tsp.g.id(o) << ":" << y[o] << "  ";
+	}
+	cerr << endl;
 
 	NodeIt nit(tsp.g);
 	Node n = nit;
 	Node f = nit;
 	
 	while(nedges != tsp.NNodes){
-		// Put the vertex in the solution
-		y[n] = true;
-		tsp.BestCircuit.push_back(n);
+		y[n] = true;  // Put the vertex in the solution
+		tour.push_back(tsp.g.id(n));
 		
-		// cerr << "n: " << tsp.g.id(n) << "  y[n]: " << y[n] << endl;
+		cerr << "n: " << tsp.g.id(n) << "  y[n]: " << y[n] << endl;
 		
 		double wmin = DBL_MAX;  // min weight
 		IncEdgeIt emin = INVALID;  // min inc edge of n
@@ -79,7 +117,7 @@ bool greedy(TSP_Data &tsp,  int maxTime)
 		IncEdgeIt e(tsp.g, n);
 		Node op = INVALID;
 		
-		// cerr << "wmin: " << wmin << endl;
+		cerr << "wmin: " << wmin << endl;
 		
 		for(; e != INVALID; ++e){
 
@@ -89,7 +127,7 @@ bool greedy(TSP_Data &tsp,  int maxTime)
 				op = tsp.g.u(e);
 			}
 			
-			// cerr << "   (" << tsp.g.id(tsp.g.u(e)) << ", " << tsp.g.id(tsp.g.v(e)) << ")  x: " << x[e] << "  c: " << tsp.weight[e] << " op: " << tsp.g.id(op) << " y[op] " << y[op] << endl;
+			cerr << "   (" << tsp.g.id(tsp.g.u(e)) << ", " << tsp.g.id(tsp.g.v(e)) << ")  x: " << x[e] << "  c: " << tsp.weight[e] << " op: " << tsp.g.id(op) << " y[op] " << y[op] << endl;
 			
 			if( ! y[ op ] ){        // The expression in [] returns the "destin" vertex of edge e
 				if( tsp.weight[e] < wmin ){
@@ -101,15 +139,15 @@ bool greedy(TSP_Data &tsp,  int maxTime)
 		}
 		
 		if( wmin < DBL_MAX ){  // If got some edge
-			// cerr << "wmin: " << wmin << endl;
+			cerr << "wmin: " << wmin << endl;
 			x[emin] = true;  // Puts the edge e in the solution: this data will be visible outside this function
 			nedges++;
 			cost += wmin;
 			n = nmin;
-			// cerr << "new n: " << tsp.g.id(n) << endl;
+			cerr << "new n: " << tsp.g.id(n) << endl;
 		}
 		else{
-			cout << "Error: could not found a minimum weight value." << endl;
+			cerr << "Error: could not found a minimum weight value." << endl;
 			exit(1);
 		}
 		
@@ -117,9 +155,10 @@ bool greedy(TSP_Data &tsp,  int maxTime)
 			y[f] = false;
 		}
 		
-		// cerr << "nedges: " << nedges << endl;
-		// cerr << endl;
+		cerr << "nedges: " << nedges << endl;
+		cerr << endl;
 	}
+
 	
 	if( nedges > 0 ){
 		tsp.BestCircuitValue = cost;
@@ -127,3 +166,4 @@ bool greedy(TSP_Data &tsp,  int maxTime)
 
 	return false;
 }
+//------------------------------------------------------------------------------
