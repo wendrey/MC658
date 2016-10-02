@@ -12,6 +12,7 @@
  ******************************************************************************/
 
 #include <time.h>
+#include <string.h>
 #include <iostream>
 #include <float.h>
 #include <lemon/list_graph.h>
@@ -37,13 +38,15 @@ bool bt(TSP_Data &tsp, int maxTime) {
 	vector<Node> circuit;
 	circuit.clear();
 	tsp.BestCircuit.clear();
-
 	NodeBoolMap node(tsp.g);
+
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
 		node[n] = false;
 			
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
 		return bfs(tsp, maxTime, n, 0, node, t, circuit);
+
+	return false;
 	
 }
 
@@ -64,13 +67,11 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, cl
 		Node v = tsp.g.target(e);
 						
 		// se existe uma potencial solucao, continua a busca
-		// se achar uma solucao melhor, atualiza a solucao
 		
 		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue)
 			bfs(tsp, maxTime, v, cost + tsp.weight[e], node, t, circuit);
 		
 		// se achou o ciclo, verifica se a solucao melhora
-		// se achar uma solucao melhor, atualiza a solucao
 		
 		else if (v == circuit.front() && circuit.size() == tsp.NNodes) 
 			if (cost + tsp.weight[e] <= tsp.BestCircuitValue)
@@ -83,8 +84,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, cl
 	circuit.pop_back();	
 	node[u] = false;
 	
-	// se viu todas combinacoes posiveis e tem solucao, retorna solucao otima
-	// se viu apenas as combinacoes de um determinado ramo, retorna falso
+	// retorna verdadeiro se encontrou uma solucao otima
 	
 	if (circuit.empty() && tsp.BestCircuit.size() == tsp.NNodes)
 		return true;
@@ -97,12 +97,11 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 	// acha o menor vertice na nova solucao
 
 	int k = 0;
-	string str = tsp.vname[circuit[k]];
 
-	for (int i = 1; i < circuit.size(); i++) {
-		if (strcmp(str,tsp.vname[circuit[i]) > 0)
+	for (int i = 1; i < circuit.size(); i++)
+		if (strcmp(tsp.vname[circuit[k]],tsp.vname[circuit[i]]) > 0)
 			k = i;
-	
+			
 	// verifica se tem melhor solucao
 
 	if (cost == tsp.BestCircuitValue) {	
@@ -115,7 +114,7 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 		}
 	}
 
-	// atualiza melhor solucao
+	// atualiza a solucao
 
 	for (int i = 0; i < tsp.NNodes; i++)
 		tsp.BestCircuit[i] = circuit[(k+i)%tsp.NNodes];
