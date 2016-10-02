@@ -116,8 +116,8 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 	// atualiza a solucao
 
 	for (int i = 0; i < tsp.NNodes; i++) {
-		tsp.BestCircuit[i] = circuit[(k+i)%tsp.NNodes];
 		cerr << i;
+		tsp.BestCircuit[i] = circuit[(k+i)%tsp.NNodes];
 	}
 	tsp.BestCircuitValue = cost;
 								
