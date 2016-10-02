@@ -33,7 +33,8 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 bool bt(TSP_Data &tsp, int maxTime) {
 
 	clock_t t = clock();
-	vector<Node> circuit.clear();
+	vector<Node> circuit;
+	circuit.clear();
 	tsp.BestCircuit.clear();
 
 	NodeBoolMap node(tsp.g);
@@ -88,7 +89,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 	// se viu todas combinacoes posiveis e tem solucao, retorna solucao otima
 	// se viu apenas as combinacoes de um determinado ramo, retorna falso
 	
-	if (circuit.empty && BestCircuit.size == tsp.NNodes)
+	if (circuit.empty && tsp.BestCircuit.size() == tsp.NNodes)
 		return true;
 	return false;
 
