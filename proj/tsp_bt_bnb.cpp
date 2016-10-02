@@ -34,7 +34,7 @@ bool bt(TSP_Data &tsp, int maxTime) {
 
 	clock_t t = clock();
 	vector<Node> circuit.clear();
-	tsp.g.BestCircuit.clear();
+	tsp.BestCircuit.clear();
 
 	NodeBoolMap node(tsp.g);
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n) {
@@ -42,7 +42,7 @@ bool bt(TSP_Data &tsp, int maxTime) {
 		cerr << tsp.vname[n] << endl;
 	}
 		
-	return false; bfs(tsp, maxTime, n, 0, 0, nodeFromId(0), t, circuit);
+	return false; //bfs(tsp, maxTime, nodeFromId(0), 0, 0, node, t, circuit);
 	
 }
 
@@ -88,7 +88,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 	// se viu todas combinacoes posiveis e tem solucao, retorna solucao otima
 	// se viu apenas as combinacoes de um determinado ramo, retorna falso
 	
-	if (circuit.empty && BestCircuit.size == tsp.NNodes)
+	if (circuit.empty && tsp.BestCircuit.size == tsp.NNodes)
 		return true;
 	return false;
 
