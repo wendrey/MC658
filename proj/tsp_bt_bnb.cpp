@@ -97,12 +97,12 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 	// acha o menor vertice na nova solucao
 
 	int k = 0;
-	return;
 	
 	for (int i = 1; i < circuit.size(); i++)
 		if (tsp.vname[circuit[k]] > tsp.vname[circuit[i]])
 			k = i;
 			
+	return;
 	// verifica se tem melhor solucao
 
 	if (cost == tsp.BestCircuitValue) {	
