@@ -45,12 +45,7 @@ bool bt(TSP_Data &tsp, int maxTime) {
 
 			
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
-//		return bfs(tsp, maxTime, n, 0, node, t, circuit);
-{ 
-  	tsp.BestCircuit.push_back(n);
-	tsp.BestCircuit[0] = n;
-}
-
+		return bfs(tsp, maxTime, n, 0, node, t, circuit);
 	return false;
 	
 }
@@ -102,7 +97,8 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 	// acha o menor vertice na nova solucao
 
 	int k = 0;
-
+	return;
+	
 	for (int i = 1; i < circuit.size(); i++)
 		if (tsp.vname[circuit[k]] > tsp.vname[circuit[i]])
 			k = i;
