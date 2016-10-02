@@ -145,7 +145,7 @@ bool bnb(TSP_Data &tsp,  int maxTime) {
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
 		node[n] = false;
 
-	for (ListGraph::IncEdgeIt e(tsp.g); e != INVALID; ++e)
+	for (ListGraph::EdgeIt e(tsp.g); e != INVALID; ++e)
 		edge[e] = false;
 
 	double lower = getLowerBound(tsp);
@@ -173,7 +173,7 @@ bool bnb_bfs() {
 double getLowerBound (TSP_Data &tsp) {
 
 	double bound = 0;
-	std::map<Node,list<Edge>> nemap;
+	map <ListGraph::Node, list<ListGraph::Edge>> nemap;
 	
 	// acha as duas menores arestas que saem de cada vertice
 	
@@ -203,7 +203,7 @@ double getLowerBound (TSP_Data &tsp) {
 	
 	// encontra o limitante inferior sa solucao otima
 	
-	for (auto i = map.begin(); i != map.end(); ++i)
+	for (auto i = nemap.begin(); i != nemap.end(); ++i)
 		bound += tsp.weight[i->second.front()] + tsp.weight[i->second.back()];
 	bound /= 2;
 	
