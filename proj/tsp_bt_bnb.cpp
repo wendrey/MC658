@@ -38,10 +38,12 @@ bool bt(TSP_Data &tsp, int maxTime) {
 	tsp.BestCircuit.clear();
 
 	NodeBoolMap node(tsp.g);
-	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n) {
+	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n) 
 		node[n] = false;
-		cerr << tsp.vname[n] << endl;
-	}
+
+	sortByLabel(tsp.g.vname);	
+	for(int i = 0; i < tsp.NNodes; i++)
+		cerr << tsp.vname[i] << endl;
 		
 	return false; //bfs(tsp, maxTime, nodeFromId(0), 0, 0, node, t, circuit);
 	
