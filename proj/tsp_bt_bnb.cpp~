@@ -89,7 +89,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, int visit, double cost, NodeBoolMa
 	// se viu todas combinacoes posiveis e tem solucao, retorna solucao otima
 	// se viu apenas as combinacoes de um determinado ramo, retorna falso
 	
-	if (circuit.empty && tsp.BestCircuit.size() == tsp.NNodes)
+	if (circuit.empty() && tsp.BestCircuit.size() == tsp.NNodes)
 		return true;
 	return false;
 
