@@ -173,29 +173,29 @@ bool bnb_bfs() {
 double getLowerBound (TSP_Data &tsp) {
 
 	double bound = 0;
-	NodeMap<Node,list<Edge>> map;
+	std::map<Node,list<Edge>> nemap;
 	
 	// acha as duas menores arestas que saem de cada vertice
 	
 	for (ListGraph::NodeIt u(tsp.g); u != INVALID; ++u) {
-		for (ListGraph::IncEdgeIt e(tsp.g, n); e != INVALID; ++e) {
+		for (ListGraph::IncEdgeIt e(tsp.g, u); e != INVALID; ++e) {
 
-			if (map[u].size() == 0) 
-				map[u].push_back(e);
+			if (nemap[u].size() == 0) 
+				nemap[u].push_back(e);
 
-			else if (map[u].size() == 1) {
-				if (tsp.weight[map[u].front()] < tsp.weight[e])
-					map[u].push_back(e);
+			else if (nemap[u].size() == 1) {
+				if (tsp.weight[nemap[u].front()] < tsp.weight[e])
+					nemap[u].push_back(e);
 				else
-					map[u].push_front(e);
+					nemap[u].push_front(e);
 			}
 
-			else if (tsp.weight[map[u].back()] > tsp.weight[e]) {
-				map[u].pop_back();
-				if (tsp.weight[map[u].front()] > tsp.weight[e])
-					map[u].push_front(e);
+			else if (tsp.weight[nemap[u].back()] > tsp.weight[e]) {
+				nemap[u].pop_back();
+				if (tsp.weight[nemap[u].front()] > tsp.weight[e])
+					nemap[u].push_front(e);
 				else
-					map[u].push_back(e);				
+					nemap[u].push_back(e);				
 			}
 
 		}
@@ -203,9 +203,9 @@ double getLowerBound (TSP_Data &tsp) {
 	
 	// encontra o limitante inferior sa solucao otima
 	
-	for (auto iterator i = map.begin(); i != map.end(); ++i)
+	for (auto i = map.begin(); i != map.end(); ++i)
 		bound += tsp.weight[i->second.front()] + tsp.weight[i->second.back()];
-	bound /= 2
+	bound /= 2;
 	
 	return bound;
 	
