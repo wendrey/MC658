@@ -48,7 +48,7 @@ bool bt(TSP_Data &tsp, int maxTime) {
 //		return bfs(tsp, maxTime, n, 0, node, t, circuit);
 { 
   	tsp.BestCircuit.push_back(n);
-//	tsp.BestCircuit[0] = n;
+	tsp.BestCircuit[0] = n;
 }
 
 	return false;
