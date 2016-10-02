@@ -20,7 +20,8 @@
 #include "tsp_bt_bnb.h"
 
 void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit);
-bool bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit);
+bool bt_bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit);
+double getLowerBound (TSP_Data &tsp);
 
 //		cerr << "-------------------" << endl;		
 //		cerr << "BFS : " << visit << endl;
@@ -42,15 +43,14 @@ bool bt(TSP_Data &tsp, int maxTime) {
 
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
 		node[n] = false;
-
 			
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
-		return bfs(tsp, maxTime, n, 0, node, t, circuit);
+		return bt_bfs(tsp, maxTime, n, 0, node, t, circuit);
 	return false;
 	
 }
 
-bool bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit) {
+bool bt_bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit) {
 
 	// verifica o tempo de execucao
 
@@ -69,7 +69,7 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, cl
 		// se existe uma potencial solucao, continua a busca
 		
 		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue)
-			bfs(tsp, maxTime, v, cost + tsp.weight[e], node, t, circuit);
+			bt_bfs(tsp, maxTime, v, cost + tsp.weight[e], node, t, circuit);
 		
 		// se achou o ciclo, verifica se a solucao melhora
 		
@@ -135,9 +135,80 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 
 bool bnb(TSP_Data &tsp,  int maxTime) {
 
-	
+	clock_t t = clock();
+	vector<Node> circuit;
+	circuit.clear();
+	tsp.BestCircuit.clear();
+	NodeBoolMap node(tsp.g);
+	EdgeBoolMap edge(tsp.g);
 
+	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
+		node[n] = false;
+
+	for (ListGraph::IncEdgeIt e(tsp.g); e != INVALID; ++e)
+		edge[e] = false;
+
+	double lower = getLowerBound(tsp);
+	cerr << "Lower Bound : " << lower << endl;
 	return false;
 
 }
+/*
+bool bnb_bfs() {
+
+	// verifica o tempo de execucao
+
+	if (maxTime < (clock() - t) / CLOCKS_PER_SEC)
+		return false;
+
+	// poe o vertice na solucao e passa por todos seus vizinhos	
+
+	node[u] = true;
+	circuit.push_back(u);
+
+			
+
+}
+*/
+double getLowerBound (TSP_Data &tsp) {
+
+	double bound = 0;
+	NodeMap<Node,list<Edge>> map;
+	
+	// acha as duas menores arestas que saem de cada vertice
+	
+	for (ListGraph::NodeIt u(tsp.g); u != INVALID; ++u) {
+		for (ListGraph::IncEdgeIt e(tsp.g, n); e != INVALID; ++e) {
+
+			if (map[u].size() == 0) 
+				map[u].push_back(e);
+
+			else if (map[u].size() == 1) {
+				if (tsp.weight[map[u].front()] < tsp.weight[e])
+					map[u].push_back(e);
+				else
+					map[u].push_front(e);
+			}
+
+			else if (tsp.weight[map[u].back()] > tsp.weight[e]) {
+				map[u].pop_back();
+				if (tsp.weight[map[u].front()] > tsp.weight[e])
+					map[u].push_front(e);
+				else
+					map[u].push_back(e);				
+			}
+
+		}
+	}
+	
+	// encontra o limitante inferior sa solucao otima
+	
+	for (auto iterator i = map.begin(); i != map.end(); ++i)
+		bound += tsp.weight[i->second.front()] + tsp.weight[i->second.back()];
+	bound /= 2
+	
+	return bound;
+	
+}
+
 //------------------------------------------------------------------------------
