@@ -15,6 +15,7 @@
 #include <string.h>
 #include <iostream>
 #include <float.h>
+#include <map>
 #include <lemon/list_graph.h>
 #include "mygraphlib.h"
 #include "tsp_bt_bnb.h"
