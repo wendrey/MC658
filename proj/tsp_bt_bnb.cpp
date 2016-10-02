@@ -41,7 +41,7 @@ bool bt(TSP_Data &tsp, int maxTime) {
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n) 
 		node[n] = false;
 
-	sortByLabel(tsp.g.vname);	
+	sortByLabel(tsp.vname);	
 	for(int i = 0; i < tsp.NNodes; i++)
 		cerr << tsp.vname[i] << endl;
 		
