@@ -94,6 +94,14 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, cl
 
 void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 
+	// primeira solucao encontrada
+
+	if (tsp.BestCircuit.empty()) {
+		tsp.BestCircuit = circuit;
+		tsp.BestCircuitValue = cost;
+		return;
+	}
+
 	// acha o menor vertice na nova solucao
 
 	int k = 0;
@@ -115,10 +123,8 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 
 	// atualiza a solucao
 
-	for (int i = 0; i < tsp.NNodes; i++) {
-		cerr << i;
+	for (int i = 0; i < tsp.NNodes; i++)
 		tsp.BestCircuit[i] = circuit[(k+i)%tsp.NNodes];
-	}
 	tsp.BestCircuitValue = cost;
 								
 }
