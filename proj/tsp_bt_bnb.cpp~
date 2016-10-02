@@ -86,6 +86,8 @@ bool bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, cl
 	
 	// retorna verdadeiro se encontrou uma solucao otima
 	
+	if (maxTime < (clock() - t) / CLOCKS_PER_SEC)
+		return false;
 	if (circuit.empty() && tsp.BestCircuit.size() == tsp.NNodes)
 		return true;
 	return false;
