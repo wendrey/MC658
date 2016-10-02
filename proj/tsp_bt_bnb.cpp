@@ -102,7 +102,6 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 		if (tsp.vname[circuit[k]] > tsp.vname[circuit[i]])
 			k = i;
 			
-	return;
 	// verifica se tem melhor solucao
 
 	if (cost == tsp.BestCircuitValue) {	
@@ -114,6 +113,7 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 		}
 	}
 
+	return;
 	// atualiza a solucao
 
 	for (int i = 0; i < tsp.NNodes; i++)
