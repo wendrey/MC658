@@ -99,7 +99,7 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 	int k = 0;
 
 	for (int i = 1; i < circuit.size(); i++)
-		if (strcmp(tsp.vname[circuit[k]],tsp.vname[circuit[i]]) > 0)
+		if (tsp.vname[circuit[k]] > tsp.vname[circuit[i]]))
 			k = i;
 			
 	// verifica se tem melhor solucao
