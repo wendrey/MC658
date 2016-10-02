@@ -106,10 +106,9 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 
 	if (cost == tsp.BestCircuitValue) {	
 		for (int i = 0; i < tsp.NNodes; i++) {
-			int aux = strcmp(tsp.vname[tsp.BestCircuit[i]],tsp.vname[circuit[(k+i)%tsp.NNodes]]);
-			if (aux > 0)
+			if (tsp.vname[tsp.BestCircuit[i]] > tsp.vname[circuit[(k+i)%tsp.NNodes]])
 				break;
-			if (aux < 0)				
+			if (tsp.vname[tsp.BestCircuit[i]] < tsp.vname[circuit[(k+i)%tsp.NNodes]])				
 				return;
 		}
 	}
