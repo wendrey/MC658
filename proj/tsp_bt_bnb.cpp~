@@ -113,7 +113,6 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 		}
 	}
 
-	return;
 	// atualiza a solucao
 
 	for (int i = 0; i < tsp.NNodes; i++)
