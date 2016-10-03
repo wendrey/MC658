@@ -22,8 +22,9 @@
 
 bool bt_bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit);
 void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit);
+bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit);
 double getLowerBound (TSP_Data &tsp);
-bool mySort (const pair<Edge,double> &a, const pair<Edge,double> &b) {
+bool mySort (const pair<Edge,double> &a, const pair<Edge,double> &b);
 
 //		cerr << "-------------------" << endl;		
 //		cerr << "BFS : " << visit << endl;
@@ -147,11 +148,9 @@ bool bnb(TSP_Data &tsp, int maxTime) {
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
 		node[n] = false;
 
-	for (ListGraph::EdgeIt e(tsp.g); e != INVALID; ++e)
-		edge[e] = false;
 
-	double lower = getLowerBound(tsp);
-	cerr << "Lower Bound : " << lower << endl;
+	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
+		return bnb_bfs(tsp, maxTime, n, 0, node, t, circuit);
 	return false;
 
 }
