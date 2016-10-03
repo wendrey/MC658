@@ -23,7 +23,7 @@
 bool bt_bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit);
 void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit);
 bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit);
-double getLowerBound (TSP_Data &tsp);
+double getLowerBound (TSP_Data &tsp, NodeBoolMap &node);
 bool mySort (const pair<Edge,double> &a, const pair<Edge,double> &b);
 
 //		cerr << "-------------------" << endl;		
@@ -168,7 +168,7 @@ bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 	circuit.push_back(u);
 
 	double bound = getLowerBound(tsp, node);
-	map <Edge,double>> edges;
+	map <Edge,double> edges;
 
 	// ordena as arestas que saem do vertice
 
@@ -182,7 +182,7 @@ bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 
 	for (int i = 0; i < ve.size(); i++) {
 
-		Edge e = ve[i].second;
+		Edge e = ve[i].first;
 		Node v = tsp.g.target(e);
 		
 		// se existe uma potencial solucao, continua a busca
@@ -213,7 +213,7 @@ bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 		
 }
 
-double getLowerBound (TSP_Data &tsp, EdgeNodeMap &node) {
+double getLowerBound (TSP_Data &tsp, NodeBoolMap &node) {
 
 	double bound = 0;
 	map<Node,list<Edge>> nemap;
@@ -262,7 +262,7 @@ double getLowerBound (TSP_Data &tsp, EdgeNodeMap &node) {
 
 bool mySort (const pair<Edge,double> &a, const pair<Edge,double> &b) {
 
-	return a.second < b.second;
+	return a.first < b.first;
 
 }
 
