@@ -15,13 +15,15 @@
 #include <string.h>
 #include <iostream>
 #include <float.h>
+#include <map>
 #include <lemon/list_graph.h>
 #include "mygraphlib.h"
 #include "tsp_bt_bnb.h"
 
-void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit);
 bool bt_bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit);
+void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit);
 double getLowerBound (TSP_Data &tsp);
+bool mySort (const pair<Edge,double> &a, const pair<Edge,double> &b) {
 
 //		cerr << "-------------------" << endl;		
 //		cerr << "BFS : " << visit << endl;
@@ -133,7 +135,7 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 
 //------------------------------------------------------------------------------
 
-bool bnb(TSP_Data &tsp,  int maxTime) {
+bool bnb(TSP_Data &tsp, int maxTime) {
 
 	clock_t t = clock();
 	vector<Node> circuit;
@@ -153,31 +155,77 @@ bool bnb(TSP_Data &tsp,  int maxTime) {
 	return false;
 
 }
-/*
-bool bnb_bfs() {
+
+bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit) {
 
 	// verifica o tempo de execucao
 
 	if (maxTime < (clock() - t) / CLOCKS_PER_SEC)
 		return false;
 
-	// poe o vertice na solucao e passa por todos seus vizinhos	
+	// poe o vertice na solucao 
 
 	node[u] = true;
 	circuit.push_back(u);
 
-			
+	double bound = getLowerBound(tsp, node);
+	map <Edge,double>> edges;
 
+	// ordena as arestas que saem do vertice
+
+	for (ListGraph::IncEdgeIt e(tsp.g, u); e != INVALID; ++e) 
+		edges.insert(pair<Edge,double>(e,tsp.weight[e]));
+
+	vector<pair<Edge,double>> v(edges.begin(), edges.end());
+	sort(v.begin(), v.end(), mySort);
+
+	// passa pelos vizinhos do vertice
+
+	for (int i = 0; i < vector.size(); i++) {
+
+		Edge v = v[i].second;
+		
+		// se existe uma potencial solucao, continua a busca
+		
+		if (node[v] == false && cost + bound < tsp.BestCircuitValue)
+			bt_bfs(tsp, maxTime, v, cost + tsp.weight[e], node, t, circuit);
+		
+		// se achou o ciclo, verifica se a solucao melhora
+		
+		else if (v == circuit.front() && circuit.size() == tsp.NNodes) 
+			if (cost + tsp.weight[e] <= tsp.BestCircuitValue)
+				updateSolution(tsp, cost + tsp.weight[e], circuit);
+	
+	}
+				
+	// tira o vertice da solucao
+
+	circuit.pop_back();	
+	node[u] = false;
+	
+	// retorna verdadeiro se encontrou uma solucao otima
+	
+	if (maxTime < (clock() - t) / CLOCKS_PER_SEC)
+		return false;
+	if (circuit.empty() && tsp.BestCircuit.size() == tsp.NNodes)
+		return true;
+	return false;		
+		
 }
-*/
-double getLowerBound (TSP_Data &tsp) {
+
+double getLowerBound (TSP_Data &tsp, EdgeNodeMap &node) {
 
 	double bound = 0;
-	map <ListGraph::Node, list<ListGraph::Edge>> nemap;
+	map<Node,list<Edge>> nemap;
 	
 	// acha as duas menores arestas que saem de cada vertice
+	// considera apenas vertices que nao estao na solucao 
 	
 	for (ListGraph::NodeIt u(tsp.g); u != INVALID; ++u) {
+
+		if (node[u])
+			continue;
+
 		for (ListGraph::IncEdgeIt e(tsp.g, u); e != INVALID; ++e) {
 
 			if (nemap[u].size() == 0) 
@@ -209,6 +257,12 @@ double getLowerBound (TSP_Data &tsp) {
 	
 	return bound;
 	
+}
+
+bool mySort (const pair<Edge,double> &a, const pair<Edge,double> &b) {
+
+	return a.second < b.second;
+
 }
 
 //------------------------------------------------------------------------------
