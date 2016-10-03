@@ -175,14 +175,15 @@ bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 	for (ListGraph::IncEdgeIt e(tsp.g, u); e != INVALID; ++e) 
 		edges.insert(pair<Edge,double>(e,tsp.weight[e]));
 
-	vector<pair<Edge,double>> v(edges.begin(), edges.end());
-	sort(v.begin(), v.end(), mySort);
+	vector<pair<Edge,double>> ve(edges.begin(), edges.end());
+	sort(ve.begin(), ve.end(), mySort);
 
 	// passa pelos vizinhos do vertice
 
-	for (int i = 0; i < vector.size(); i++) {
+	for (int i = 0; i < ve.size(); i++) {
 
-		Edge v = v[i].second;
+		Edge e = ve[i].second;
+		Node v = tsp.g.target(e);
 		
 		// se existe uma potencial solucao, continua a busca
 		
