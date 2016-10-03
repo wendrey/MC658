@@ -66,7 +66,7 @@ bool bt_dfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue)
 			bt_dfs(tsp, maxTime, v, cost + tsp.weight[e], node, t, circuit);
 		
-		// se achou o ciclo, verifica se a solucao melhora e atualiza
+		// se achou o ciclo, verifica se a solucao melhora
 		
 		else if (v == circuit.front() && circuit.size() == (unsigned) tsp.NNodes) 
 			if (cost + tsp.weight[e] <= tsp.BestCircuitValue)
@@ -107,7 +107,7 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 		if (tsp.vname[circuit[k]] > tsp.vname[circuit[i]])
 			k = i;
 			
-	// verifica se tem menor ordem lexicografica
+	// verifica se tem melhor solucao
 
 	if (cost == tsp.BestCircuitValue) {	
 		for (int i = 0; i < tsp.NNodes; i++) {
