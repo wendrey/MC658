@@ -20,19 +20,11 @@
 #include "mygraphlib.h"
 #include "tsp_bt_bnb.h"
 
-bool bt_bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit);
+bool bt_dfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit);
 void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit);
-bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit);
+bool bnb_dfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit);
 double getLowerBound (TSP_Data &tsp, NodeBoolMap &node);
 bool mySort (const pair<Edge,double> &a, const pair<Edge,double> &b);
-
-//		cerr << "-------------------" << endl;		
-//		cerr << "BFS : " << visit << endl;
-//		cerr << "Node u : " << tsp.g.id(u) << endl;					
-//		cerr << "Node v : " << tsp.g.id(v) << endl;
-//		cerr << "Arc u->v : " << tsp.g.id(e) << endl;
-//		cerr << "Weight : " << tsp.weight[e] << endl;
-//		cerr << "Map v : " << node[v] << endl;		
 
 //------------------------------------------------------------------------------
 
@@ -48,12 +40,12 @@ bool bt(TSP_Data &tsp, int maxTime) {
 		node[n] = false;
 			
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
-		return bt_bfs(tsp, maxTime, n, 0, node, t, circuit);
+		return bt_dfs(tsp, maxTime, n, 0, node, t, circuit);
 	return false;
 	
 }
 
-bool bt_bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit) {
+bool bt_dfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit) {
 
 	// verifica o tempo de execucao
 
@@ -72,7 +64,7 @@ bool bt_bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 		// se existe uma potencial solucao, continua a busca
 		
 		if (node[v] == false && cost + tsp.weight[e] < tsp.BestCircuitValue)
-			bt_bfs(tsp, maxTime, v, cost + tsp.weight[e], node, t, circuit);
+			bt_dfs(tsp, maxTime, v, cost + tsp.weight[e], node, t, circuit);
 		
 		// se achou o ciclo, verifica se a solucao melhora
 		
@@ -115,7 +107,7 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 		if (tsp.vname[circuit[k]] > tsp.vname[circuit[i]])
 			k = i;
 			
-	// verifica se tem melhor solucao
+	// verifica se tem menor ordem lexicografica
 
 	if (cost == tsp.BestCircuitValue) {	
 		for (int i = 0; i < tsp.NNodes; i++) {
@@ -150,12 +142,12 @@ bool bnb(TSP_Data &tsp, int maxTime) {
 
 
 	for (ListGraph::NodeIt n(tsp.g); n != INVALID; ++n)
-		return bnb_bfs(tsp, maxTime, n, 0, node, t, circuit);
+		return bnb_dfs(tsp, maxTime, n, 0, node, t, circuit);
 	return false;
 
 }
 
-bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit) {
+bool bnb_dfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node, clock_t t, vector<Node> circuit) {
 
 	// verifica o tempo de execucao
 
@@ -190,7 +182,7 @@ bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 		// se existe uma potencial solucao, continua a busca
 		
 		if (node[v] == false && cost + bound < tsp.BestCircuitValue)
-			bt_bfs(tsp, maxTime, v, cost + tsp.weight[e], node, t, circuit);
+			bt_dfs(tsp, maxTime, v, cost + tsp.weight[e], node, t, circuit);
 		
 		// se achou o ciclo, verifica se a solucao melhora
 		
