@@ -76,7 +76,7 @@ bool bt_bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 		
 		// se achou o ciclo, verifica se a solucao melhora
 		
-		else if (v == circuit.front() && circuit.size() == tsp.NNodes) 
+		else if (v == circuit.front() && circuit.size() == (unsigned) tsp.NNodes) 
 			if (cost + tsp.weight[e] <= tsp.BestCircuitValue)
 				updateSolution(tsp, cost + tsp.weight[e], circuit);
 	
@@ -91,7 +91,7 @@ bool bt_bfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 	
 	if (maxTime < (clock() - t) / CLOCKS_PER_SEC)
 		return false;
-	if (circuit.empty() && tsp.BestCircuit.size() == tsp.NNodes)
+	if (circuit.empty() && tsp.BestCircuit.size() == (unsigned) tsp.NNodes)
 		return true;
 	return false;
 
@@ -111,7 +111,7 @@ void updateSolution (TSP_Data &tsp, double cost, vector<Node> circuit) {
 
 	int k = 0;
 	
-	for (int i = 1; i < circuit.size(); i++)
+	for (unsigned int i = 1; i < circuit.size(); i++)
 		if (tsp.vname[circuit[k]] > tsp.vname[circuit[i]])
 			k = i;
 			
@@ -180,7 +180,7 @@ bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 
 	// passa pelos vizinhos do vertice
 
-	for (int i = 0; i < ve.size(); i++) {
+	for (unsigned int i = 0; i < ve.size(); i++) {
 
 		Edge e = ve[i].first;
 		Node v = tsp.g.u(e);
@@ -194,7 +194,7 @@ bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 		
 		// se achou o ciclo, verifica se a solucao melhora
 		
-		else if (v == circuit.front() && circuit.size() == tsp.NNodes) 
+		else if (v == circuit.front() && circuit.size() == (unsigned) tsp.NNodes) 
 			if (cost + tsp.weight[e] <= tsp.BestCircuitValue)
 				updateSolution(tsp, cost + tsp.weight[e], circuit);
 	
@@ -209,7 +209,7 @@ bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 	
 	if (maxTime < (clock() - t) / CLOCKS_PER_SEC)
 		return false;
-	if (circuit.empty() && tsp.BestCircuit.size() == tsp.NNodes)
+	if (circuit.empty() && tsp.BestCircuit.size() == (unsigned) tsp.NNodes)
 		return true;
 	return false;		
 		
