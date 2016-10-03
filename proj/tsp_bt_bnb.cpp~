@@ -182,8 +182,10 @@ bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 
 	for (int i = 0; i < ve.size(); i++) {
 
-		Edge e = ve[i].second;
-		Node v = tsp.g.target(e);
+		Edge e = ve[i].first;
+		Node v = tsp.g.u(e);
+		if (v == u)
+			v = tsp.g.v(e);
 		
 		// se existe uma potencial solucao, continua a busca
 		
@@ -213,7 +215,7 @@ bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 		
 }
 
-double getLowerBound (TSP_Data &tsp, EdgeNodeMap &node) {
+double getLowerBound (TSP_Data &tsp, NodeBoolMap &node) {
 
 	double bound = 0;
 	map<Node,list<Edge>> nemap;
@@ -262,7 +264,7 @@ double getLowerBound (TSP_Data &tsp, EdgeNodeMap &node) {
 
 bool mySort (const pair<Edge,double> &a, const pair<Edge,double> &b) {
 
-	return a.second < b.second;
+	return a.first < b.first;
 
 }
 

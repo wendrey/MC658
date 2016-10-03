@@ -183,7 +183,9 @@ bool bnb_bfs(TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 	for (int i = 0; i < ve.size(); i++) {
 
 		Edge e = ve[i].first;
-		Node v = tsp.g.target(e);
+		Node v = tsp.g.u(e);
+		if (v == u)
+			v = tsp.g.v(e);
 		
 		// se existe uma potencial solucao, continua a busca
 		
