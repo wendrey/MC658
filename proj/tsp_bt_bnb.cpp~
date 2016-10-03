@@ -70,7 +70,7 @@ bool bt_dfs (TSP_Data &tsp, int maxTime, Node u, double cost, NodeBoolMap &node,
 		
 		else if (v == circuit.front() && circuit.size() == (unsigned) tsp.NNodes) 
 			if (cost + tsp.weight[e] <= tsp.BestCircuitValue)
-				;//updateSolution(tsp, cost + tsp.weight[e], circuit);
+				updateSolution(tsp, cost + tsp.weight[e], circuit);
 	
 	}
 
